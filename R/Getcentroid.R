@@ -15,7 +15,7 @@
 #get adjustable centroid WKT data function
 Getcentroid <- function(country,buffer_range){
         #read shap
-        map_total <- readOGR(dsn = file.path('.','TM_WORLD_BORDERS-0.3', fsep = .Platform$file.sep), layer = 'TM_WORLD_BORDERS-0.3')
+        map_total <- readOGR(dsn = system.file("TM_WORLD_BORDERS-0.3", package = "rgcd"), layer = 'TM_WORLD_BORDERS-0.3')
         country_map <- map(database = map_total, regions = country)
         #from map to SP
         IDs <- sapply(strsplit(country_map$names, ":"), function(x) x[1])
