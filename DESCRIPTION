@@ -1,0 +1,22 @@
+Package: rgcd
+Type: Package
+Title: Read gbif data, Check date record and Plot Occurence data
+Version: 0.1.0
+Author: Boyu Yu
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: An easy way to get gbif data, checking the date record 
+        completeness and plot the occurence data
+Encoding: UTF-8
+LazyData: true
+Imports:
+        rgbif,
+        ggplot2,
+        mapr,
+        maps,
+        spocc,
+        leaflet,
+        countrycode,
+        rgeos,
+        rgdal,
+        maptools
+RoxygenNote: 6.0.1
