@@ -4,7 +4,9 @@
 #' @return a list of occdat, exist species names, all species names, exist speices number, all species number, country name and the indicater of specific country
 #' @examples
 #' data <- Getoccdat('Pinus contorta,Danaus plexippus,Canada')
-#' @import rgbif, spocc, countrycode
+#' @import rgbif
+#' @import spocc
+#' @import countrycode
 #' @export
 
 Getoccdat <- function(species){

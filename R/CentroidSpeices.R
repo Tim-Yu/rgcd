@@ -6,7 +6,8 @@
 #' @examples
 #' centroid <- Getcentroid('Canada', 8)
 #' CentroidSpecies('Pinus contorta,Danaus plexippus,Canada', centroid)
-#' @import rgbif, spocc
+#' @import rgbif
+#' @import spocc
 #' @export
 
 CentroidSpeices <- function(species, centroid){

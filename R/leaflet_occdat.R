@@ -6,7 +6,8 @@
 #' name <- Readname('Pinus contorta,Danaus plexippus,Canada')
 #' data <- Getoccdat(name)
 #' leaflet_occdat(data)
-#' @import mapr,leaflet
+#' @import mapr
+#' @import leaflet
 #' @export
 
 leaflet_occdat <- function(datalist){
