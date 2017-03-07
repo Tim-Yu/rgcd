@@ -9,6 +9,7 @@
 #' @import maptools
 #' @import rgeos
 #' @import maps
+#' @import rgdal
 #' @export
 
 #get adjustable centroid WKT data function
