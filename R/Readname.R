@@ -4,6 +4,7 @@
 #' @return a list of all species name, how many species, indicater of specific country, country 2 letter code and the country name
 #' @examples
 #' Readname('Pinus contorta,Danaus plexippus,canada')
+#' @import rgbif, countrycode
 
 
 Readname <- function(species){

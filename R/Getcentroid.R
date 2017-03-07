@@ -5,6 +5,8 @@
 #' @return centroid area WKT data
 #' @examples
 #' Getcentroid('china', 8)
+#' @import sp, maptools, rgeos, maps
+#' @export
 
 #get adjustable centroid WKT data function
 Getcentroid <- function(country,buffer_range){
