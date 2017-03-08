@@ -53,7 +53,9 @@ Checkdate <- function(species, number = 10000 ){
                                 dat$data$datequality[j] <- c("Eventdate missing.")
                         }else if(is.na(dat$data$month[j])) {
                                 dat$data$datequality[j] <- c("Only event year is known.")
-                        }else if(is.null(dat$data$day[j]) ||is.na(dat$data$day[j])) {
+                        }else if(is.null(dat$data$day[j])){
+
+                        }else if(is.na(dat$data$day[j])) {
                                 dat$data$datequality[j] <- c("No specific day record")
                         }
                         if(dat$data$datequality[j] == c("")) {
@@ -61,8 +63,11 @@ Checkdate <- function(species, number = 10000 ){
                         }
                 }
                 Nodaterate <- length(dat$data$name[is.na(dat$data$year)]) / length(dat$data$name)
-                Nomrate <- length(dat$data$name[is.null(dat$data$month) || is.na(dat$data$month)]) / length(dat$data$name)
-                NOdrate <- length(dat$data$name[is.null(dat$data$day) || is.na(dat$data$day)]) / length(dat$data$name)
+                Nomrate <- length(dat$data$name[is.na(dat$data$month)]) / length(dat$data$name)
+                if(is.null(dat$data$day[j])){ Nodrate <- 1
+                }else{
+                        NOdrate <- length(dat$data$name[is.na(dat$data$day)]) / length(dat$data$name)
+                }
                 table <- data.frame(species_c, Nodaterate, Nomrate, NOdrate)
                 colnames(table) <- c("Species names", "No eventdate rate", "No month rate", "No day rate")
                 print(table)
@@ -77,7 +82,9 @@ Checkdate <- function(species, number = 10000 ){
                                         dat[[i]]$data$datequality[j] <- c("Eventdate missing.")
                                 }else if(is.na(dat[[i]]$data$month[j])) {
                                         dat[[i]]$data$datequality[j] <- c("Only event year is known.")
-                                }else if(is.null(dat[[i]]$data$day[j]) || is.na(dat[[i]]$data$day[j])) {
+                                }else if(is.null(dat[[i]]$data$day[j])) {
+
+                                }else if(is.na(dat[[i]]$data$day[j])) {
                                         dat[[i]]$data$datequality[j] <- c("No specific day record")
                                 }
                                 if(dat[[i]]$data$datequality[j] == c("")) {
@@ -85,8 +92,12 @@ Checkdate <- function(species, number = 10000 ){
                                 }
                         }
                         rates[i,1] <- length(dat[[i]]$data$name[is.na(dat[[i]]$data$year)]) / length(dat[[i]]$data$name)
-                        rates[i,2] <- length(dat[[i]]$data$name[is.null(dat[[i]]$data$month) || is.na(dat[[i]]$data$month)]) / length(dat[[i]]$data$name)
-                        rates[i,3] <- length(dat[[i]]$data$name[is.null(dat[[i]]$data$day) || is.na(dat[[i]]$data$day)]) / length(dat[[i]]$data$name)
+                        rates[i,2] <- length(dat[[i]]$data$name[is.na(dat[[i]]$data$month)]) / length(dat[[i]]$data$name)
+                        if(is.null(dat[[i]]$data$day[j])) {
+
+                        }else {
+                                rates[i,3] <- length(dat[[i]]$data$name[is.na(dat[[i]]$data$day)]) / length(dat[[i]]$data$name)
+                        }
                 }
                 table <- data.frame(species_ce, rates)
                 colnames(table) <- c("Species names", "No eventdate rate", "No month rate", "No day rate")
