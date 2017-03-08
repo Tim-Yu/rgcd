@@ -44,12 +44,18 @@ Getoccdat <- function(species){
                 species_ne <- length(species_ce)
         }else{
                 dat <- occ(query = species_c, from = 'gbif', limit = 300, has_coords = TRUE)
-                species_ne <- length(species_c)
+                #Checking if some species are missing in this area
+                s_exist <- logical(length = species_n)
+                for(i in seq_along(species_c)){
+                        s_exist[i] <- if(length(dat$gbif$data[i][[1]]) == 0){FALSE}else{TRUE}
+                }
+                species_ce <- species_c[s_exist]
+                species_ne <- length(species_ce)
         }
 
         #If no specie is in that area, programme will return the species occurrance data in whole world
         if(species_ne == 0){
-                dat <- occ(query = species_c, from = 'gbif', limit = 300, has_coords = TRUE)
+                dat <- occ(query = species_ce, from = 'gbif', limit = 300, has_coords = TRUE)
         }
         list(dat, species_ce, species_c, species_ne, species_n, countryname, checkcountry)
 }

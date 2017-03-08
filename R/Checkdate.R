@@ -37,12 +37,22 @@ Checkdate <- function(species, number = 10000 ){
                 species_ne <- length(species_ce)
         }else{
                 dat <- occ_search(scientificName = species_c, limit = number)
-                species_ne <- length(species_c)
+                #Checking if some species are missing in this area
+                s_exist <- logical(length = species_n)
+                for(i in seq_along(species_c)){
+                        if(species_n == 1){
+                                s_exist[i] <- if(length(dat$data) == 0){FALSE}else{TRUE}
+                        }else{
+                                s_exist[i] <- if(length(dat[[i]]$data) == 0){FALSE}else{TRUE}
+                        }
+                }
+                species_ce <- species_c[s_exist]
+                species_ne <- length(species_ce)
         }
 
         #If no specie is in that area, programme will return the species occurrance data in whole world
         if(species_ne == 0){
-                dat <- occ_search(scientificName = species_c, limit = number)
+                dat <- occ_search(scientificName = species_ce, limit = number)
         }
         #Searching for the missing value
         if(species_n == 1){ # Only one species
@@ -70,12 +80,12 @@ Checkdate <- function(species, number = 10000 ){
                 }else{
                         Nodrate <- length(dat$data$name[is.na(dat$data$day)]) / length(dat$data$name)
                 }
-                table <- data.frame(species_c, Nodaterate, Nomrate, Nodrate)
+                table <- data.frame(species_ce, Nodaterate, Nomrate, Nodrate)
                 colnames(table) <- c("Species names", "No eventdate rate", "No month rate", "No day rate")
                 print(table)
         }else{ #Multipel species
                 rates <- matrix(nrow = length(species_ce), ncol = 3)
-                for(i in seq_along(species_c)){
+                for(i in seq_along(species_ce)){
                         dat[[i]]$data$datequality <- NULL
                         dat[[i]]$data <- cbind(dat[[i]]$data, datequality = c(""))
                         dat[[i]]$data$datequality <- as.character(dat[[i]]$data$datequality)

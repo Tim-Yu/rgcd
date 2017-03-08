@@ -35,10 +35,10 @@ leaflet_occdat <- function(datalist){
                 addLegend(maps, position = 'bottomright', colors = colors_used, labels = species_ce, opacity = 2, title = paste('Species in', countryname, sep = " "))
 
         }else if(species_ne == 0){
-                addLegend(maps, position = 'bottomright', colors = colors_used, labels = species_c, opacity = 2, title = paste('No species in', countryname,"Here are species over world", sep = " "))
+                addLegend(maps, position = 'bottomright', colors = colors_used, labels = species_ce, opacity = 2, title = paste('No species in', countryname,"Here are species over world", sep = " "))
 
         }else{
-                addLegend(maps, position = 'bottomright', colors = colors_used, labels = species_c, opacity = 2, title = 'Species')
+                addLegend(maps, position = 'bottomright', colors = colors_used, labels = species_ce, opacity = 2, title = 'Species')
 
         }
 }
