@@ -95,7 +95,7 @@ Checkdate <- function(species, number = 10000 ){
                         rates[i,1] <- length(dat[[i]]$data$name[is.na(dat[[i]]$data$year)]) / length(dat[[i]]$data$name)
                         rates[i,2] <- length(dat[[i]]$data$name[is.na(dat[[i]]$data$month)]) / length(dat[[i]]$data$name)
                         if(is.null(dat[[i]]$data$day[j])) {
-                                Nodrate <- 1
+                                rates[i,3] <- 1
                         }else {
                                 rates[i,3] <- length(dat[[i]]$data$name[is.na(dat[[i]]$data$day)]) / length(dat[[i]]$data$name)
                         }
