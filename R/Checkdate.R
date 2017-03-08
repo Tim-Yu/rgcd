@@ -75,7 +75,7 @@ Checkdate <- function(species, number = 10000 ){
                 print(table)
         }else{ #Multipel species
                 rates <- matrix(nrow = length(species_ce), ncol = 3)
-                for(i in seq_along(species_ce)){
+                for(i in seq_along(species_c)){
                         dat[[i]]$data$datequality <- NULL
                         dat[[i]]$data <- cbind(dat[[i]]$data, datequality = c(""))
                         dat[[i]]$data$datequality <- as.character(dat[[i]]$data$datequality)
