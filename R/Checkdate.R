@@ -69,7 +69,7 @@ Checkdate <- function(species, number = 10000 ){
                 }else{
                         Nodrate <- length(dat$data$name[is.na(dat$data$day)]) / length(dat$data$name)
                 }
-                table <- data.frame(species_c, Nodaterate, Nomrate, NOdrate)
+                table <- data.frame(species_c, Nodaterate, Nomrate, Nodrate)
                 colnames(table) <- c("Species names", "No eventdate rate", "No month rate", "No day rate")
                 print(table)
         }else{ #Multipel species
@@ -95,7 +95,7 @@ Checkdate <- function(species, number = 10000 ){
                         rates[i,1] <- length(dat[[i]]$data$name[is.na(dat[[i]]$data$year)]) / length(dat[[i]]$data$name)
                         rates[i,2] <- length(dat[[i]]$data$name[is.na(dat[[i]]$data$month)]) / length(dat[[i]]$data$name)
                         if(is.null(dat[[i]]$data$day[j])) {
-
+                                Nodrate <- 1
                         }else {
                                 rates[i,3] <- length(dat[[i]]$data$name[is.na(dat[[i]]$data$day)]) / length(dat[[i]]$data$name)
                         }
