@@ -2,7 +2,7 @@
 #'
 #' @param species a string containing all species name and country (if any) in the end, separate by ','.
 #' @param number how many record is going to be checked
-#' @return the gbif data with a datequality column
+#' @return the gbif data with a datequality column and a table showing the rate of missing whole eventdate, month and day.
 #' @examples
 #' Checkdate('Pinus contorta,Danaus plexippus,Canada', number = 20000)
 #' @import rgbif
@@ -49,45 +49,49 @@ Checkdate <- function(species, number = 10000 ){
                 dat$data <- cbind(dat$data, datequality = c(""))
                 dat$data$datequality <- as.character(dat$data$datequality)
                 for(j in seq_along(dat$data$name)){
-                        if(is.na(dat$data$lastCrawled[j])) {
-                                dat$data$datequality[j] <- c("Last crawled date missing ")}
-                        if(is.na(dat$data$lastParsed[j])) {
-                                dat$data$datequality[j] <- paste(dat$data$datequality[j], "Last parsed date missing", sep = ',')}
-                        if(is.na(dat$data$lastInterpreted[j])) {
-                                dat$data$datequality[j] <- paste(dat$data$datequality[j], "Last interpreted date missing", sep = ',')}
-                        if(is.na(dat$data$eventDate[j])) {
-                                dat$data$datequality[j] <- paste(dat$data$datequality[j], "Event date missing", sep = ',')}
-                        if(is.na(dat$data$dateIdentified[j])) {
-                                dat$data$datequality[j] <- paste(dat$data$datequality[j], "Identified date missing", sep = ',')}
-                        if(is.na(dat$data$modified[j])) {
-                                dat$data$datequality[j] <- paste(dat$data$datequality[j], "Modified date missing", sep = ',') }
+                        if(is.na(dat$data$year[j])) {
+                                dat$data$datequality[j] <- c("Eventdate missing.")
+                        }else if(is.na(dat$data$month[j])) {
+                                dat$data$datequality[j] <- c("Only event year is known.")
+                        }else if(is.null(dat$data$day[j]) ||is.na(dat$data$day[j])) {
+                                dat$data$datequality[j] <- c("No specific day record")
+                        }
                         if(dat$data$datequality[j] == c("")) {
-                                dat$data$datequality[j] <- c("Full record")}
-                        if(substring(dat$data$datequality[j], 1, 1) == "," ) {dat$data$datequality[j] <- substring(dat$data$datequality[j], 2)}
+                                dat$data$datequality[j] <- c("Full record")
+                        }
                 }
+                Nodaterate <- length(dat$data$name[is.na(dat$data$year)]) / length(dat$data$name)
+                Nomrate <- length(dat$data$name[is.null(dat$data$month) || is.na(dat$data$month)]) / length(dat$data$name)
+                NOdrate <- length(dat$data$name[is.null(dat$data$day) || is.na(dat$data$day)]) / length(dat$data$name)
+                table <- data.frame(species_c, Nodaterate, Nomrate, NOdrate)
+                colnames(table) <- c("Species names", "No eventdate rate", "No month rate", "No day rate")
+                print(table)
         }else{ #Multipel species
+                rates <- matrix(nrow = length(species_ce), ncol = 3)
                 for(i in seq_along(species_ce)){
                         dat[[i]]$data$datequality <- NULL
                         dat[[i]]$data <- cbind(dat[[i]]$data, datequality = c(""))
                         dat[[i]]$data$datequality <- as.character(dat[[i]]$data$datequality)
                         for(j in seq_along(dat[[i]]$data$name)){
-                                if(is.na(dat[[i]]$data$lastCrawled[j])) {
-                                        dat[[i]]$data$datequality[j] <- c("Last crawled date missing ")}
-                                if(is.na(dat[[i]]$data$lastParsed[j])) {
-                                        dat[[i]]$data$datequality[j] <- paste(dat[[i]]$data$datequality[j], "Last parsed date missing", sep = ',')}
-                                if(is.na(dat[[i]]$data$lastInterpreted[j])) {
-                                        dat[[i]]$data$datequality[j] <- paste(dat[[i]]$data$datequality[j], "Last interpreted date missing", sep = ',')}
-                                if(is.na(dat[[i]]$data$eventDate[j])) {
-                                        dat[[i]]$data$datequality[j] <- paste(dat[[i]]$data$datequality[j], "Event date missing", sep = ',')}
-                                if(is.na(dat[[i]]$data$dateIdentified[j])) {
-                                        dat[[i]]$data$datequality[j] <- paste(dat[[i]]$data$datequality[j], "Identified date missing", sep = ',')}
-                                if(is.na(dat[[i]]$data$modified[j])) {
-                                        dat[[i]]$data$datequality[j] <- paste(dat[[i]]$data$datequality[j], "Modified date missing", sep = ',') }
+                                if(is.na(dat[[i]]$data$year[j])) {
+                                        dat[[i]]$data$datequality[j] <- c("Eventdate missing.")
+                                }else if(is.na(dat[[i]]$data$month[j])) {
+                                        dat[[i]]$data$datequality[j] <- c("Only event year is known.")
+                                }else if(is.null(dat[[i]]$data$day[j]) || is.na(dat[[i]]$data$day[j])) {
+                                        dat[[i]]$data$datequality[j] <- c("No specific day record")
+                                }
                                 if(dat[[i]]$data$datequality[j] == c("")) {
-                                        dat[[i]]$data$datequality[j] <- c("Full record")}
-                                if(substring(dat[[i]]$data$datequality[j], 1, 1) == "," ) {dat[[i]]$data$datequality[j] <- substring(dat[[i]]$data$datequality[j], 2)}
+                                        dat[[i]]$data$datequality[j] <- c("Full record")
+                                }
                         }
+                        rates[i,1] <- length(dat[[i]]$data$name[is.na(dat[[i]]$data$year)]) / length(dat[[i]]$data$name)
+                        rates[i,2] <- length(dat[[i]]$data$name[is.null(dat[[i]]$data$month) || is.na(dat[[i]]$data$month)]) / length(dat[[i]]$data$name)
+                        rates[i,3] <- length(dat[[i]]$data$name[is.null(dat[[i]]$data$day) || is.na(dat[[i]]$data$day)]) / length(dat[[i]]$data$name)
                 }
+                table <- data.frame(species_ce, rates)
+                colnames(table) <- c("Species names", "No eventdate rate", "No month rate", "No day rate")
+                print(table)
         }
-        return(dat)
+
+        invisible(dat)
 }

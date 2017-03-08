@@ -12,7 +12,7 @@ Checkdate(species, number = 10000)
 \item{number}{how many record is going to be checked}
 }
 \value{
-the gbif data with a datequality column
+the gbif data with a datequality column and a table showing the rate of missing whole eventdate, month and day.
 }
 \description{
 Check the completeness of the date record
