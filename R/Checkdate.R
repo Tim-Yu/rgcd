@@ -37,6 +37,7 @@ Checkdate <- function(species, number = 10000 ){
                 species_ne <- length(species_ce)
         }else{
                 dat <- occ_search(scientificName = species_c, limit = number)
+                species_ne <- length(species_c)
         }
 
         #If no specie is in that area, programme will return the species occurrance data in whole world

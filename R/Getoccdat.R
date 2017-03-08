@@ -44,6 +44,7 @@ Getoccdat <- function(species){
                 species_ne <- length(species_ce)
         }else{
                 dat <- occ(query = species_c, from = 'gbif', limit = 300, has_coords = TRUE)
+                species_ne <- length(species_c)
         }
 
         #If no specie is in that area, programme will return the species occurrance data in whole world
