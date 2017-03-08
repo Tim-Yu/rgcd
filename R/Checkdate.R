@@ -64,9 +64,10 @@ Checkdate <- function(species, number = 10000 ){
                 }
                 Nodaterate <- length(dat$data$name[is.na(dat$data$year)]) / length(dat$data$name)
                 Nomrate <- length(dat$data$name[is.na(dat$data$month)]) / length(dat$data$name)
-                if(is.null(dat$data$day[j])){ Nodrate <- 1
+                if(is.null(dat$data$day[j])){
+                        Nodrate <- 1
                 }else{
-                        NOdrate <- length(dat$data$name[is.na(dat$data$day)]) / length(dat$data$name)
+                        Nodrate <- length(dat$data$name[is.na(dat$data$day)]) / length(dat$data$name)
                 }
                 table <- data.frame(species_c, Nodaterate, Nomrate, NOdrate)
                 colnames(table) <- c("Species names", "No eventdate rate", "No month rate", "No day rate")
